@@ -5,21 +5,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from "@angular/router";
+import { CalendarComponent } from "./calendar/calendar/calendar.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
-      {path: '', redirectTo: '/calendar', pathMatch: 'full'},
-      {
-        path: 'calendar',
-        loadChildren: './calendar/calendar.module#CalendarModule'
-      }
+      { path: '', redirectTo: 'calendar', pathMatch: 'full' },
+      { path: 'calendar', component: CalendarComponent }
     ])
   ],
   providers: [],
