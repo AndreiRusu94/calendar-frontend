@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from "@angular/router";
 import { CalendarComponent } from "./calendar/calendar/calendar.component";
-import { MatSelectModule } from "@angular/material/select";
+// import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -20,8 +20,7 @@ import { MatSelectModule } from "@angular/material/select";
     RouterModule.forRoot([
       {path: '', redirectTo: 'calendar', pathMatch: 'full'},
       {path: 'calendar', component: CalendarComponent}
-    ]),
-    MatSelectModule
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
