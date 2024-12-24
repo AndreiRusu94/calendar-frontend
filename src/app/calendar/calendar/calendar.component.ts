@@ -42,17 +42,22 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  public generateCalendarByMonthSelection(month: string): void {
-    this.selectedMonth = month;
-    this.selectedDate = new Date(this.selectedYear, this.months.findIndex(m => m === month) + 1, 0);
+  public generateCalendarByMonthSelection(month: Event): void {
+    const selectElement = month.target as HTMLSelectElement;
+    this.selectedMonth = selectElement.value;
+    this.selectedDate = new Date(this.selectedYear, this.months.findIndex(m => m === this.selectedMonth) + 1, 0);
 
+    console.log(this.selectedMonth);
     this.generateCalendar();
   }
 
-  public generateCalendarByYearSelection(year: number): void {
-    this.selectedYear = year;
-    this.selectedDate = new Date(year, this.months.findIndex(month => month === this.selectedMonth) + 1, 0);
+  public generateCalendarByYearSelection(year: Event): void {
+    const selectElement = year.target as HTMLSelectElement;
+    this.selectedYear = Number(selectElement.value);
+    this.selectedDate = new Date(this.selectedYear, this.months.findIndex(month => month === this.selectedMonth) + 1, 0);
 
+    console.log(this.selectedYear);
+    console.log(this.selectedDate);
     this.generateCalendar();
   }
 
