@@ -25,17 +25,22 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.generateCalendarForTheCurrentMonth();
+    this.generateCalendarForSelectedMonth();
   }
 
-  private generateCalendarForTheCurrentMonth() {
+  private generateCalendarForSelectedMonth() {
     this.dayService.getDaysWithDataForMonth(this.selectedDate).subscribe(data => {
-      this.generateCalendar(data);
+      this.calendar = this.generateCalendar(data);
     });
   }
 
-  private generateCalendar(daysWithData: Day[]) {
-    this.calendar = new Calendar();
+  private generateCalendar(daysWithData: Day[]): Calendar {
+    let emptyCalendar = this.generateEmptyCalendar();
+    return this.fillCalendarWithData(emptyCalendar, daysWithData);
+  }
+
+  private generateEmptyCalendar(): Calendar {
+    let calendar = new Calendar();
     for (let i = 1; i <= this.selectedDate.getDate(); i++) {
       let day: Day = {
         number: i,
@@ -43,15 +48,20 @@ export class CalendarComponent implements OnInit {
         isCrossedOff: false,
         appointments: []
       };
-      this.calendar.days.push(day);
+      calendar.days.push(day);
     }
 
+    return calendar;
+  }
+
+  private fillCalendarWithData(calendar: Calendar, daysWithData: Day[]) {
     for (let i = 0; i < daysWithData.length; i++) {
       let day = daysWithData[i];
       day.startDate = new Date(day.startDate);
       day.number = day.startDate.getDate();
-      this.calendar.days[day.number - 1] = day;
+      calendar.days[day.number - 1] = day;
     }
+    return calendar;
   }
 
   public generateCalendarByMonthSelection(month: Event): void {
@@ -59,7 +69,7 @@ export class CalendarComponent implements OnInit {
     this.selectedMonth = selectElement.value;
     this.selectedDate = new Date(this.selectedYear, this.months.findIndex(m => m === this.selectedMonth) + 1, 0);
 
-    this.generateCalendarForTheCurrentMonth();
+    this.generateCalendarForSelectedMonth();
   }
 
   public generateCalendarByYearSelection(year: Event): void {
@@ -67,7 +77,7 @@ export class CalendarComponent implements OnInit {
     this.selectedYear = Number(selectElement.value);
     this.selectedDate = new Date(this.selectedYear, this.months.findIndex(month => month === this.selectedMonth) + 1, 0);
 
-    this.generateCalendarForTheCurrentMonth();
+    this.generateCalendarForSelectedMonth();
   }
 
 }
