@@ -1,45 +1,67 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { Day } from "../model/Day";
+import { Calendar } from "../model/Calendar";
+import { DayService } from "../service/DayService";
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
+@Injectable({
+  providedIn: 'root'
+})
 export class CalendarComponent implements OnInit {
 
-  months: string[];
-  years: number[] = [];
-  selectedYear: number;
-  selectedMonth: string;
-  selectedDate: Date;
-  calendar: number[] = [];
+  months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'];
+  selectedYear: number = new Date().getFullYear();
+  selectedMonth: string = this.months[new Date().getMonth()];
+  selectedDate: Date = new Date(this.selectedYear, new Date().getMonth() + 1, 0);
+  years: number[] = Array.from({length: 11}, (_, i) => this.selectedYear - 5 + i);
+  calendar: Calendar = new Calendar();
 
-  constructor() {
+  constructor(private dayService: DayService) {
   }
 
   ngOnInit() {
-    this.selectedDate = new Date();
-
-    this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-      'September', 'October', 'November', 'December'];
-
-    let currentYear = this.selectedDate.getFullYear();
-    this.selectedYear = currentYear;
-    this.selectedMonth = this.months[this.selectedDate.getMonth()];
-    this.selectedDate = new Date(this.selectedYear, this.selectedDate.getMonth(), 0);
-
-    for (let i = currentYear - 5; i < currentYear + 5; i++) {
-      this.years.push(i);
-    }
-    this.generateCalendar();
+    this.generateCalendarForSelectedMonth();
   }
 
-  private generateCalendar() {
-    this.calendar = [];
+  private generateCalendarForSelectedMonth() {
+    this.dayService.getDaysWithDataForMonth(this.selectedDate).subscribe(data => {
+      this.calendar = this.generateCalendar(data);
+    });
+  }
 
+  private generateCalendar(daysWithData: Day[]): Calendar {
+    let emptyCalendar = this.generateEmptyCalendar();
+    return this.fillCalendarWithData(emptyCalendar, daysWithData);
+  }
+
+  private generateEmptyCalendar(): Calendar {
+    let calendar = new Calendar();
     for (let i = 1; i <= this.selectedDate.getDate(); i++) {
-      this.calendar.push(i);
+      let day: Day = {
+        number: i,
+        startDate: undefined,
+        isCrossedOff: false,
+        appointments: []
+      };
+      calendar.days.push(day);
     }
+
+    return calendar;
+  }
+
+  private fillCalendarWithData(calendar: Calendar, daysWithData: Day[]) {
+    for (let i = 0; i < daysWithData.length; i++) {
+      let day = daysWithData[i];
+      day.startDate = new Date(day.startDate);
+      day.number = day.startDate.getDate();
+      calendar.days[day.number - 1] = day;
+    }
+    return calendar;
   }
 
   public generateCalendarByMonthSelection(month: Event): void {
@@ -47,8 +69,7 @@ export class CalendarComponent implements OnInit {
     this.selectedMonth = selectElement.value;
     this.selectedDate = new Date(this.selectedYear, this.months.findIndex(m => m === this.selectedMonth) + 1, 0);
 
-    console.log(this.selectedMonth);
-    this.generateCalendar();
+    this.generateCalendarForSelectedMonth();
   }
 
   public generateCalendarByYearSelection(year: Event): void {
@@ -56,9 +77,7 @@ export class CalendarComponent implements OnInit {
     this.selectedYear = Number(selectElement.value);
     this.selectedDate = new Date(this.selectedYear, this.months.findIndex(month => month === this.selectedMonth) + 1, 0);
 
-    console.log(this.selectedYear);
-    console.log(this.selectedDate);
-    this.generateCalendar();
+    this.generateCalendarForSelectedMonth();
   }
 
 }

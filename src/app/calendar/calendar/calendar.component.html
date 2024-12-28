@@ -17,22 +17,28 @@
       <div class="container-fluid">
 
         <div class="menu">
-          <select name="month-selector" id="month-selector" (change)="generateCalendarByMonthSelection($event)">
+          <select name="month-selector" id="month-selector" (change)="generateCalendarByMonthSelection($event)" [(ngModel)]="selectedMonth">
             <option *ngFor="let month of months" [value]="month">
               {{month}}
             </option>
           </select>
 
-          <select name="year-selector" id="year-selector" (change)="generateCalendarByYearSelection($event)">
+          <select name="year-selector" id="year-selector" (change)="generateCalendarByYearSelection($event)" [(ngModel)]="selectedYear">
             <option *ngFor="let year of years" [value]="year">
               {{year}}
             </option>
           </select>
         </div>
 
-        <div>
-          <div *ngFor="let day of calendar" class="square">{{day}}</div>
+        <div *ngIf="calendar?.days?.length > 0; else loading">
+          <div *ngFor="let day of calendar.days" class="square" [ngStyle]="day.isCrossedOff ? { 'background-color': 'darkred' } : { 'background-color': 'steelblue' }">
+            {{ day.number }}
+          </div>
         </div>
+
+        <ng-template #loading>
+          <div>Loading...</div>
+        </ng-template>
 
       </div>
     </div>

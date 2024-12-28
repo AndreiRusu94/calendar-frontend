@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from "@angular/router";
 import { CalendarComponent } from "./calendar/calendar/calendar.component";
-// import { MatSelectModule } from "@angular/material/select";
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,8 @@ import { CalendarComponent } from "./calendar/calendar/calendar.component";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
     RouterModule.forRoot([
       {path: '', redirectTo: 'calendar', pathMatch: 'full'},
       {path: 'calendar', component: CalendarComponent}
