@@ -185,12 +185,23 @@ hr {
   padding-left: 1rem;
 }
 
-.square {
-  width: 19%;
+.day {
+  width: 13%;
   height: 100px;
   margin: 5px;
-  display: inline-block;
   color: #f8f9fc;
-  border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.day-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.goal {
+  margin: 0 5px 5px;
 }

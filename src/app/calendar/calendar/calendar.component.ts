@@ -2,6 +2,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { Day } from "../model/Day";
 import { Calendar } from "../model/Calendar";
 import { DayService } from "../service/DayService";
+import { DateUtil } from "../../util/DateUtil";
 
 @Component({
   selector: 'app-calendar',
@@ -46,7 +47,8 @@ export class CalendarComponent implements OnInit {
         number: i,
         startDate: undefined,
         isCrossedOff: false,
-        appointments: []
+        appointments: [],
+        goals: []
       };
       calendar.days.push(day);
     }
@@ -80,4 +82,19 @@ export class CalendarComponent implements OnInit {
     this.generateCalendarForSelectedMonth();
   }
 
+  getDayName(dayNumber: number) {
+    return DateUtil.getDayName(new Date(this.selectedYear, this.months.findIndex(month => month === this.selectedMonth), dayNumber));
+  }
+
+  getDayColor(day: Day): string {
+    if (day.goals.length > 0) {
+      return "goldenrod";
+    }
+
+    if (day.isCrossedOff) {
+      return "darkred";
+    }
+
+    return "steelblue";
+  }
 }
