@@ -2,6 +2,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { Day } from "../model/Day";
 import { Calendar } from "../model/Calendar";
 import { DayService } from "../service/DayService";
+import { DateUtil } from "../../util/DateUtil";
 
 @Component({
   selector: 'app-calendar',
@@ -80,4 +81,7 @@ export class CalendarComponent implements OnInit {
     this.generateCalendarForSelectedMonth();
   }
 
+  getDayName(dayNumber: number) {
+    return DateUtil.getDayName(new Date(this.selectedYear, this.months.findIndex(month => month === this.selectedMonth), dayNumber));
+  }
 }

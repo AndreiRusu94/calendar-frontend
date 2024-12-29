@@ -186,11 +186,18 @@ hr {
 }
 
 .square {
-  width: 19%;
+  width: 13%;
   height: 100px;
   margin: 5px;
   display: inline-block;
   color: #f8f9fc;
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.day-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
 }
