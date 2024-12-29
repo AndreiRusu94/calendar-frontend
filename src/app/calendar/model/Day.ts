@@ -1,4 +1,5 @@
 import { Appointment } from "./Appointment";
+import { Goal } from "./Goal";
 
 export class Day {
 
@@ -6,4 +7,5 @@ export class Day {
   isCrossedOff: boolean
   appointments: Appointment[]
   number: number
+  goals: Goal[]
 }

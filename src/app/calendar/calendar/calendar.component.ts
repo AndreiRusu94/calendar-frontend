@@ -47,7 +47,8 @@ export class CalendarComponent implements OnInit {
         number: i,
         startDate: undefined,
         isCrossedOff: false,
-        appointments: []
+        appointments: [],
+        goals: []
       };
       calendar.days.push(day);
     }
@@ -83,5 +84,17 @@ export class CalendarComponent implements OnInit {
 
   getDayName(dayNumber: number) {
     return DateUtil.getDayName(new Date(this.selectedYear, this.months.findIndex(month => month === this.selectedMonth), dayNumber));
+  }
+
+  getDayColor(day: Day): string {
+    if (day.goals.length > 0) {
+      return "goldenrod";
+    }
+
+    if (day.isCrossedOff) {
+      return "darkred";
+    }
+
+    return "steelblue";
   }
 }
