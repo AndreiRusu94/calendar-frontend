@@ -6,8 +6,9 @@
       <span *ngIf="day.number < 8">{{ getDayName(day.number) }}</span>
     </div>
     <span *ngFor="let goal of day.goals" class="goal">
-              {{ goal.description }}
-            </span>
+      {{ goal.description }}
+    </span>
+    <div id="highlight" class="highlight" (click)="crossDay(day)"></div>
   </div>
 </div>
 

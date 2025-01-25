@@ -29,4 +29,8 @@ export class DayComponent {
   getDayName(dayNumber: number) {
     return DateUtil.getDayName(new Date(this.selectedYear, DateUtil.months.findIndex(month => month === this.selectedMonth), dayNumber));
   }
+
+  crossDay(day: Day) {
+    day.isCrossedOff = !day.isCrossedOff;
+  }
 }
