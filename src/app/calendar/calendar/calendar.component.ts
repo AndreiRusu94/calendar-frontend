@@ -14,10 +14,8 @@ import { DateUtil } from "../../util/DateUtil";
 })
 export class CalendarComponent implements OnInit {
 
-  months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'];
   selectedYear: number = new Date().getFullYear();
-  selectedMonth: string = this.months[new Date().getMonth()];
+  selectedMonth: string = DateUtil.months[new Date().getMonth()];
   selectedDate: Date = new Date(this.selectedYear, new Date().getMonth() + 1, 0);
   years: number[] = Array.from({length: 11}, (_, i) => this.selectedYear - 5 + i);
   calendar: Calendar = new Calendar();
@@ -69,7 +67,7 @@ export class CalendarComponent implements OnInit {
   public generateCalendarByMonthSelection(month: Event): void {
     const selectElement = month.target as HTMLSelectElement;
     this.selectedMonth = selectElement.value;
-    this.selectedDate = new Date(this.selectedYear, this.months.findIndex(m => m === this.selectedMonth) + 1, 0);
+    this.selectedDate = new Date(this.selectedYear, DateUtil.months.findIndex(m => m === this.selectedMonth) + 1, 0);
 
     this.generateCalendarForSelectedMonth();
   }
@@ -77,24 +75,10 @@ export class CalendarComponent implements OnInit {
   public generateCalendarByYearSelection(year: Event): void {
     const selectElement = year.target as HTMLSelectElement;
     this.selectedYear = Number(selectElement.value);
-    this.selectedDate = new Date(this.selectedYear, this.months.findIndex(month => month === this.selectedMonth) + 1, 0);
+    this.selectedDate = new Date(this.selectedYear, DateUtil.months.findIndex(month => month === this.selectedMonth) + 1, 0);
 
     this.generateCalendarForSelectedMonth();
   }
 
-  getDayName(dayNumber: number) {
-    return DateUtil.getDayName(new Date(this.selectedYear, this.months.findIndex(month => month === this.selectedMonth), dayNumber));
-  }
-
-  getDayColor(day: Day): string {
-    if (day.goals.length > 0) {
-      return "goldenrod";
-    }
-
-    if (day.isCrossedOff) {
-      return "darkred";
-    }
-
-    return "steelblue";
-  }
+  protected readonly DateUtil = DateUtil;
 }
