@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Calendar } from "../../model/Calendar";
 import { Day } from "../../model/Day";
 import { DateUtil } from "../../../util/DateUtil";
+import { DayService } from "../../service/DayService";
 
 @Component({
   selector: 'app-day',
@@ -9,6 +10,9 @@ import { DateUtil } from "../../../util/DateUtil";
   styleUrls: ['./day.component.scss']
 })
 export class DayComponent {
+
+  constructor(private dayService: DayService) {
+  }
 
   @Input() calendar: Calendar;
   @Input() selectedYear: number
@@ -32,5 +36,11 @@ export class DayComponent {
 
   crossDay(day: Day) {
     day.isCrossedOff = !day.isCrossedOff;
+
+    this.dayService.saveDay(day).subscribe(
+      (response) => {
+        console.log('Update successful:', response);
+      }
+    );
   }
 }

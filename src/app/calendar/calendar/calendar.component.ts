@@ -42,8 +42,9 @@ export class CalendarComponent implements OnInit {
     let calendar = new Calendar();
     for (let i = 1; i <= this.selectedDate.getDate(); i++) {
       let day: Day = {
+        id: 0,
         number: i,
-        startDate: undefined,
+        startDate: new Date(this.selectedYear, DateUtil.months.findIndex(m => m === this.selectedMonth), i + 1),
         isCrossedOff: false,
         appointments: [],
         goals: []
