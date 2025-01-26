@@ -8,11 +8,13 @@ import { RouterModule } from "@angular/router";
 import { CalendarComponent } from "./calendar/calendar/calendar.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
+import { DayComponent } from "./calendar/calendar/day/day.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarComponent
+    CalendarComponent,
+    DayComponent
   ],
   imports: [
     BrowserModule,

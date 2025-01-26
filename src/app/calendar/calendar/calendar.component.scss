@@ -184,24 +184,3 @@ hr {
 .year-selector {
   padding-left: 1rem;
 }
-
-.day {
-  width: 13%;
-  height: 100px;
-  margin: 5px;
-  color: #f8f9fc;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  display: inline-flex;
-  flex-direction: column;
-}
-
-.day-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 5px;
-}
-
-.goal {
-  margin: 0 5px 5px;
-}

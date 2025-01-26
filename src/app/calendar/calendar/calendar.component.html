@@ -19,7 +19,7 @@
         <div class="menu">
           <select name="month-selector" id="month-selector" (change)="generateCalendarByMonthSelection($event)"
                   [(ngModel)]="selectedMonth">
-            <option *ngFor="let month of months" [value]="month">
+            <option *ngFor="let month of DateUtil.months" [value]="month">
               {{ month }}
             </option>
           </select>
@@ -32,22 +32,7 @@
           </select>
         </div>
 
-        <div *ngIf="calendar?.days?.length > 0; else loading">
-          <div *ngFor="let day of calendar.days" class="day"
-               [ngStyle]="{'background-color' : getDayColor(day)}">
-            <div class="day-container">
-              <span>{{ day.number }}</span>
-              <span *ngIf="day.number < 8">{{ getDayName(day.number) }}</span>
-            </div>
-            <span *ngFor="let goal of day.goals" class="goal">
-              {{ goal.description }}
-            </span>
-          </div>
-        </div>
-
-        <ng-template #loading>
-          <div>Loading...</div>
-        </ng-template>
+        <app-day [calendar]="calendar" [selectedYear]="selectedYear" [selectedMonth]="selectedMonth"></app-day>
 
       </div>
     </div>

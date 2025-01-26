@@ -1,0 +1,32 @@
+.day {
+  width: 13%;
+  height: 100px;
+  margin: 5px;
+  color: #f8f9fc;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  flex-direction: column;
+  border-radius: 8px;
+}
+
+.day-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.goal {
+  margin: 0 5px 5px;
+}
+
+.highlight {
+  width: 8px;
+  height: 8px;
+  background-color: #ff000080;
+  top: 63%;
+  border-radius: 32%;
+  align-self: end;
+  position: relative;
+  cursor: pointer;
+}
