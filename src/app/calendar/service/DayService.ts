@@ -26,4 +26,9 @@ export class DayService {
 
     return this.http.post<Day>(this.daysUrl, day, {headers});
   }
+
+  deleteDay(day: Day) {
+    const params = new HttpParams().set('id', day.id.toString());
+    return this.http.delete(this.daysUrl, {params});
+  }
 }

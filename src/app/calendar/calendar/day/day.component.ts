@@ -37,10 +37,14 @@ export class DayComponent {
   crossDay(day: Day) {
     day.isCrossedOff = !day.isCrossedOff;
 
-    this.dayService.saveDay(day).subscribe(
-      (response) => {
-        console.log('Update successful:', response);
-      }
-    );
+    if (day.isCrossedOff) {
+      this.dayService.saveDay(day).subscribe(
+        (response) => {
+          console.log('Update successful:', response);
+        }
+      );
+    } else {
+      this.dayService.deleteDay(day).subscribe();
+    }
   }
 }
