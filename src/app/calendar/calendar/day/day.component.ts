@@ -37,22 +37,26 @@ export class DayComponent {
   crossDay(day: Day) {
     day.isCrossedOff = !day.isCrossedOff;
 
-    if (day.isCrossedOff) {
-      this.dayService.saveDay(day).subscribe(
-        (response) => {
-          this.calendar.days[response.number - 1] = response;
-        }
-      );
-    } else {
-      this.calendar.days[day.number - 1] = {
-        id: 0,
-        number: day.number,
-        startDate: new Date(this.selectedYear, DateUtil.months.findIndex(m => m === this.selectedMonth), day.number + 1),
-        isCrossedOff: false,
-        appointments: [],
-        goals: []
-      };
-      this.dayService.deleteDay(day).subscribe();
-    }
+    day.isCrossedOff ? this.saveDay(day) : this.deleteDay(day);
+  }
+
+  private saveDay(day: Day) {
+    this.dayService.saveDay(day).subscribe(
+      (response) => {
+        this.calendar.days[response.number - 1] = response;
+      }
+    );
+  }
+
+  private deleteDay(day: Day) {
+    this.calendar.days[day.number - 1] = {
+      id: 0,
+      number: day.number,
+      startDate: new Date(this.selectedYear, DateUtil.months.findIndex(m => m === this.selectedMonth), day.number + 1),
+      isCrossedOff: false,
+      appointments: [],
+      goals: []
+    };
+    this.dayService.deleteDay(day).subscribe();
   }
 }
